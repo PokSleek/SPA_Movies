@@ -2,22 +2,35 @@ import React, { PureComponent } from 'react';
 
 import './input.scss';
 
-const blockName = 'input_default';
+const blockName = 'input-default';
 
 export default class Input extends PureComponent {
     static defaultProps = {
         defaultValue: '',
-        placeholder: 'input',
+        placeholder: 'kekek',
+    };
+
+    state = {
+        value: this.props.defaultValue,
+    };
+
+    handleChange = event => {
+        this.setState({
+            value: event.target.value,
+        })
     };
 
     render() {
-        const { defaultValue, placeholder } = this.props;
+        const { placeholder } = this.props;
+        const { value } = this.state;
 
-        return <input
-            className={blockName}
-            placeholder={placeholder}
-        >
-            {defaultValue}
-        </input>
+        return (
+            <input
+                className={blockName}
+                placeholder={placeholder}
+                value={value}
+                onChange={this.handleChange}
+            />
+        )
     }
 }
