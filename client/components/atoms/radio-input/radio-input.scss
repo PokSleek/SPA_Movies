@@ -1,0 +1,32 @@
+.radio-input {
+  display: inline-block;
+
+  :first-child p {
+    border-radius: 5px 0 0 5px;
+  }
+
+  :last-child p {
+    border-radius: 0 5px 5px 0;
+  }
+
+  &__description{
+    display: inline-block;
+    padding: 12px 20px;
+  }
+
+  &__text {
+    color: #ffffff;
+    background: rgba(66, 66, 66, 0.3);
+    display: inline-block;
+    padding: 12px 20px;
+  }
+
+  .active-option {
+    opacity: inherit;
+    background: #f65261;
+  }
+
+  input {
+    display: none;
+  }
+};
