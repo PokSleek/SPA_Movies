@@ -27,12 +27,15 @@ export default class RadioInput extends PureComponent {
 
         return (
             <div className={blockName}>
-                {options.map(element => {
+                {options.map((element, index) => {
                     const { value, text } = element;
                     const isChecked = selectedOption === value;
 
                     return (
-                        <label className={`${blockName}__label`}>
+                        <label
+                            className={`${blockName}__label`}
+                            key={index}
+                        >
                             <input
                                 className={`${blockName}__input`}
                                 type="radio"
