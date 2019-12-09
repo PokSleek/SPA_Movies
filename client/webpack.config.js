@@ -7,14 +7,23 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 module.exports = {
     mode: isDevelopment ? 'development' : 'production',
     devtool: isDevelopment ? 'inline-source-map' : 'source-map',
+    context: path.resolve(__dirname, './'),
     entry: {
         app: [
             '@babel/polyfill',
-            './layouts/index.js',
+            './public/index.js',
         ],
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx']
+        alias: {
+            'atoms': path.resolve(__dirname, './components/atoms'),
+            'molecules': path.resolve(__dirname, './components/molecules'),
+            'organisms': path.resolve(__dirname, './components/organisms'),
+            'core': path.resolve(__dirname, './core'),
+            'store': path.resolve(__dirname, './store'),
+            'utils': path.resolve(__dirname, './utils'),
+        },
+        extensions: ['*', '.js', '.jsx'],
     },
     output: {
         filename: '[name].js',
@@ -56,6 +65,7 @@ module.exports = {
         }]
     },
     devServer: {
+        contentBase: path.join(__dirname, 'public'),
         port: 9000,
         open: true,
     },
