@@ -2,18 +2,18 @@ import React, { PureComponent } from 'react';
 
 import './button.scss';
 
-const blockName = 'button_default';
+const blockName = 'button-default';
 
 export default class Button extends PureComponent {
     static defaultProps = {
-        buttonText: 'button',
+        buttonText: 'BUTTON',
     };
 
     render() {
         const { buttonText } = this.props;
 
         return <button className={blockName}>
-            {buttonText}
+            {buttonText.toUpperCase()}
         </button>
     }
-}
+};
