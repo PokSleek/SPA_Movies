@@ -7,9 +7,9 @@ const blockName = 'logo';
 export default class Logo extends PureComponent {
     render() {
         return (
-                <span className={blockName}>
+                <p className={blockName}>
                     <span className={`${blockName}__bold`}>netflix</span>roulette
-                </span>
+                </p>
         );
     }
 };

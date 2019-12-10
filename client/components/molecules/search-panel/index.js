@@ -3,7 +3,6 @@ import React, { PureComponent } from 'react';
 import RadioInput from 'atoms/radio-input';
 import Button from 'atoms/button';
 import Input from 'atoms/input';
-import Logo from 'atoms/logo';
 
 import './search-panel.scss';
 
@@ -17,7 +16,11 @@ const options = [
     {
         text: 'EMAIL',
         value: 'email',
-    }
+    },
+    {
+        text: 'ANIME',
+        value: 'anime',
+    },
 ];
 
 export default class SearchPanel extends PureComponent {
@@ -33,7 +36,6 @@ export default class SearchPanel extends PureComponent {
     render() {
         return (
             <div className={blockName}>
-                <Logo />
                 <RadioInput
                     options={options}
                     selectedOption={options[1].value}

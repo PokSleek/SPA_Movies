@@ -1,15 +1,15 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 
-import SearchPanel from 'molecules/search-panel';
+import SearchBlock from 'molecules/search-block';
 
 export default class MainContent extends PureComponent {
 
     render() {
         return (
-            <div>
-                <SearchPanel />
-
-            </div>
+            <Fragment>
+                <SearchBlock />
+            </Fragment>
         )
     }
 }
+

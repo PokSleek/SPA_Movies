@@ -22,6 +22,7 @@ module.exports = {
             'core': path.resolve(__dirname, './core'),
             'store': path.resolve(__dirname, './store'),
             'utils': path.resolve(__dirname, './utils'),
+            'images': path.resolve(__dirname, './public/layouts/assets/images'),
         },
         extensions: ['*', '.js', '.jsx'],
     },
@@ -62,6 +63,12 @@ module.exports = {
                     options: isDevelopment ? { sourceMap: true } : {},
                 }
             ]
+        },
+        {
+            test: /\.(png|svg|jpg|gif)$/,
+            use: [
+                'file-loader',
+            ],
         }]
     },
     devServer: {
