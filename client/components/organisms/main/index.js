@@ -1,15 +1,15 @@
 import React, { PureComponent, Fragment } from 'react';
 
 import SearchBlock from 'molecules/search-block';
-import MoviesContainer from 'molecules/movies-container';
+import MainContent from 'molecules/main-content';
 
-export default class MainContent extends PureComponent {
+export default class Main extends PureComponent {
 
     render() {
         return (
             <Fragment>
                 <SearchBlock />
-                <MoviesContainer />
+                <MainContent />
             </Fragment>
         )
     }

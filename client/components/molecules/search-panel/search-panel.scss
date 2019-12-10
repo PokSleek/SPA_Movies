@@ -13,14 +13,6 @@
     margin: 2% 0;
     display: flex;
     justify-content: space-between;
-
-    input {
-      width: 70%;
-    }
-
-    button {
-      width: 25%;
-    }
   }
 
   &__sorting-field {
@@ -36,30 +28,10 @@
       margin: 2% 0;
       display: flex;
       flex-direction: column;
-
-      input {
-        margin: 10px 0;
-        width: calc(100% - 40px);
-      }
-
-      button {
-        margin: 10px 0;
-        align-self: center;
-        width: 60%;
-      }
     }
 
     &__sorting-field {
-      .radio-input__container {
-        margin: 10px 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .radio-input {
-        align-self: center;
-      }
+      margin: 0;
     }
   }
 }

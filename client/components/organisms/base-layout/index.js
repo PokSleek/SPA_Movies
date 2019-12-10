@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import MainContent from 'organisms/main-content';
+import Main from 'organisms/main';
 
 import './base-layout.scss';
 
@@ -10,7 +10,7 @@ export default class BaseLayout extends PureComponent {
 
     render() {
         return <div className={blockName}>
-            <MainContent/>
+            <Main/>
         </div>
     }
 }
