@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import sn from 'classnames';
+import noop from 'lodash/noop';
 
 import './radio-input.scss';
 
@@ -8,28 +9,24 @@ const blockName = 'radio-input';
 export default class RadioInput extends PureComponent {
 
     static defaultProps = {
-        options: [],
-    };
-
-    state = {
-        selectedOption: this.props.selectedOption,
+        handleChange: noop,
     };
 
     handleOption = event => {
-        this.setState({
-            selectedOption: event.target.value,
-        })
+        const { handleChange } = this.props;
+        const { value } = event.target;
+
+        handleChange(value);
     };
 
     renderRadioInput = () => {
         const { options } = this.props;
-        const { selectedOption } = this.state;
 
         return (
-            <div className={blockName}>
+            options ? <div className={blockName}>
                 {options.map((element, index) => {
                     const { value, text } = element;
-                    const isChecked = selectedOption === value;
+                    const isChecked = this.props.value === value;
 
                     return (
                         <label
@@ -49,7 +46,7 @@ export default class RadioInput extends PureComponent {
                         </label>
                     );
                 })}
-            </div>
+            </div> : null
         );
     };
 

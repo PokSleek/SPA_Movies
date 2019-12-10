@@ -1,5 +1,5 @@
 .radio-input {
-  display: inline-block;
+  display: inline-flex;
   font-size: 14px;
 
   :first-child p {
@@ -23,7 +23,7 @@
   &__text {
     padding: 12px 20px;
     display: inline-block;
-    background: rgba(35, 35, 35, 0.3);
+    background: rgba(35, 35, 35, 0.5);
     user-select: none;
   }
 

@@ -29,7 +29,7 @@ module.exports = {
     output: {
         filename: '[name].js',
         chunkFilename: '[id]-[chunkhash].js',
-        publicPath: 'dist/',
+        publicPath: '/dist/',
         path: path.resolve(__dirname, 'dist'),
     },
     module: {
@@ -64,12 +64,14 @@ module.exports = {
                 }
             ]
         },
-        {
-            test: /\.(png|svg|jpg|gif)$/,
-            use: [
-                'file-loader',
-            ],
-        }]
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                loader: 'file-loader',
+                options: {
+                    outputPath: 'images',
+                    publicPath: 'images',
+                },
+            },]
     },
     devServer: {
         contentBase: path.join(__dirname, 'public'),

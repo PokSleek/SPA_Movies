@@ -7,13 +7,31 @@ import './search-block.scss';
 
 const blockName = 'search-block';
 
-export default class SearchBlock extends PureComponent {
+const options = [
+    {
+        text: 'TITLE',
+        value: 'title',
+    },
+    {
+        text: 'GENGRE',
+        value: 'gengre',
+    },
+];
 
+
+export default class SearchBlock extends PureComponent {
     render() {
+
         return (
             <div className={blockName}>
                 <Logo />
-                <SearchPanel />
+                <SearchPanel
+                    options={options}
+                    value={{
+                        search: '',
+                        searchBy: 'title',
+                    }}
+                />
             </div>
         );
     }

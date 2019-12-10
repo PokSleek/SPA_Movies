@@ -1,10 +1,12 @@
 .search-block {
-  min-height: 400px;
-  width: 100%;
-  background: url('../../../public/layouts/assets/images/search-block_bg.jpg');
+  padding: 0.5%;
+  min-height: 350px;
+  width: 99%;
+  background: url('../../../public/layouts/assets/images/netflix-image.jpg') no-repeat center;
+  background-size: cover;
+  color: #ffffff;
 
   .logo {
-    padding: 14px 54px;
+    margin: 10px 5%;
   }
 }
-

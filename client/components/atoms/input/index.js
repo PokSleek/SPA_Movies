@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import noop from 'lodash/noop';
 
 import './input.scss';
 
@@ -6,23 +7,19 @@ const blockName = 'input-default';
 
 export default class Input extends PureComponent {
     static defaultProps = {
-        defaultValue: '',
-        placeholder: 'kekek',
-    };
-
-    state = {
-        value: this.props.defaultValue,
+        placeholder: '',
+        handleChange: noop,
     };
 
     handleChange = event => {
-        this.setState({
-            value: event.target.value,
-        })
+        const { handleChange } = this.props;
+        const { value } = event.target;
+
+        handleChange(value);
     };
 
     render() {
-        const { placeholder } = this.props;
-        const { value } = this.state;
+        const { placeholder, value } = this.props;
 
         return (
             <input
