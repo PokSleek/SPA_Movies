@@ -1,4 +1,5 @@
 .input-default {
+  width: 70%;
   padding: 20px;
   font-size: 18px;
   color: #ffffff;
@@ -8,5 +9,9 @@
 
   &::placeholder {
     color: #999999;
+  }
+  @media screen and (max-width: 700px) {
+    margin: 10px 0;
+    width: calc(100% - 40px);
   }
 }
