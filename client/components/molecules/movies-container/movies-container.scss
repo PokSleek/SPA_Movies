@@ -1,0 +1,19 @@
+.movies-container {
+  padding: 0.5%;
+  width: 99%;
+  min-height: 800px;
+  background: #232323;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+
+  .no-content {
+    width: 100%;
+    font-size: 46px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

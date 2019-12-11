@@ -1,0 +1,10 @@
+.header {
+  color: #ffffff;
+
+  &__bg {
+    min-height: 350px;
+    padding: 0.5%;
+    background: url('../../../public/layouts/assets/images/netflix-image.jpg') no-repeat center;
+    background-size: cover;
+  }
+}

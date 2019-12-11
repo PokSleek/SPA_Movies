@@ -22,13 +22,15 @@ module.exports = {
             'core': path.resolve(__dirname, './core'),
             'store': path.resolve(__dirname, './store'),
             'utils': path.resolve(__dirname, './utils'),
+            'mock': path.resolve(__dirname, './mock'),
+            'images': path.resolve(__dirname, './public/layouts/assets/images'),
         },
         extensions: ['*', '.js', '.jsx'],
     },
     output: {
         filename: '[name].js',
         chunkFilename: '[id]-[chunkhash].js',
-        publicPath: 'dist/',
+        publicPath: '/dist/',
         path: path.resolve(__dirname, 'dist'),
     },
     module: {
@@ -62,7 +64,15 @@ module.exports = {
                     options: isDevelopment ? { sourceMap: true } : {},
                 }
             ]
-        }]
+        },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                loader: 'file-loader',
+                options: {
+                    outputPath: 'images',
+                    publicPath: 'images',
+                },
+            },]
     },
     devServer: {
         contentBase: path.join(__dirname, 'public'),

@@ -1,0 +1,18 @@
+.input-default {
+  width: 70%;
+  padding: 20px;
+  font-size: 18px;
+  color: #ffffff;
+  background: rgba(35, 35, 35, 0.7);
+  border-radius: 5px;
+  border: 0;
+
+  &::placeholder {
+    user-select: none;
+    color: #999999;
+  }
+  @media screen and (max-width: 700px) {
+    margin: 10px 0;
+    width: calc(100% - 40px);
+  }
+}

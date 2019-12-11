@@ -1,0 +1,49 @@
+.radio-input {
+  display: inline-flex;
+  font-size: 14px;
+
+  :first-child p {
+    border-radius: 5px 0 0 5px;
+  }
+
+  :last-child p {
+    border-radius: 0 5px 5px 0;
+  }
+
+  &__container {
+    display: inline-block;
+    color: #ffffff;
+  }
+
+  &__description{
+    display: inline-block;
+    padding: 12px 20px 12px 0;
+  }
+
+  &__text {
+    padding: 12px 20px;
+    display: inline-block;
+    background: rgba(35, 35, 35, 0.5);
+    user-select: none;
+  }
+
+  .active-option {
+    opacity: inherit;
+    background: #f65261;
+  }
+
+  input {
+    display: none;
+  }
+
+  @media screen and (max-width: 700px) {
+    align-self: center;
+
+    &__container {
+      margin: 10px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+};
