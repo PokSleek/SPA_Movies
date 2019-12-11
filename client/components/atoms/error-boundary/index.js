@@ -25,8 +25,11 @@ export default class ErrorBoundary extends PureComponent {
         return (
             errorInfo ?
                 <div className={blockName}>
-                    <h2>Something went wrong</h2>
-                    <details style={{ whiteSpace: 'pre-wrap' }}>
+                    <h2 className={`${blockName}__title`}>Something went wrong</h2>
+                    <details
+                        className={`${blockName}__details`}
+                        style={{ whiteSpace: 'pre-wrap' }}
+                    >
                         {error && error.toString()}
                         <br />
                         {errorInfo.componentStack}
