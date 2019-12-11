@@ -53,17 +53,12 @@ export default class Header extends PureComponent {
         });
     };
 
-    onClickGoBack = () => this.setState({ isMovieDetails: !this.state.isMovieDetails });
-
     render() {
-        const {
-            film
-        } = this.props;
+        const { film, goBack } = this.props;
         const {
             searchValue,
             searchBy,
-            sortBy,
-            isMovieDetails
+            sortBy
         } = this.state;
 
         if (searchValue === 'ERROR-BOUNDARY') {
@@ -74,11 +69,10 @@ export default class Header extends PureComponent {
             <div className={blockName}>
                 <div className={`${blockName}__bg`}>
                     <Navigation
-                        isBack={isMovieDetails}
-                        onClickLogo={this.onClickGoBack}
-                        onClickBackBtn={this.onClickGoBack}
+                        isBack={!!film}
+                        onClickBackBtn={goBack}
                     />
-                    {isMovieDetails ?
+                    {film ?
                         <MovieInfo
                             film={film}
                         /> :

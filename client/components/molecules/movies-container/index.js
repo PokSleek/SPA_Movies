@@ -12,8 +12,12 @@ export default class MoviesContainer extends PureComponent {
         movies: [],
     };
 
+    getMovie = movie => () => {
+        this.props.getMovie(movie);
+    };
+
     render() {
-        const { movies } = this.props;
+        const { movies, getMovie } = this.props;
 
         return (
             <div className={blockName}>
@@ -21,11 +25,9 @@ export default class MoviesContainer extends PureComponent {
                     movies.length ?
                         movies.map(movie =>
                             <MovieLabel
+                                movie={movie}
                                 key={movie.id}
-                                imageUrl={movie.poster_path}
-                                releaseDate={movie.release_date}
-                                genres={movie.genres}
-                                title={movie.title}
+                                getMovie={getMovie}
                             />) :
                         <p className={'no-content'}>
                             No films found

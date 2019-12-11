@@ -11,11 +11,12 @@ const blockName = 'main-content';
 export default class MainContent extends PureComponent {
 
     render() {
-        const { movies } = this.props;
+        const { movies, getMovie } = this.props;
 
         return (
             <div className={blockName}>
                 <MoviesContainer
+                    getMovie={getMovie}
                     movies={movies}
                 />
                 <ContentFooter />
