@@ -12,28 +12,34 @@ const blockName = 'movie-label';
 export default class MovieLabel extends PureComponent {
 
     genresParser = memoizeOne(genresParser);
-
     getYear = memoizeOne(getYearFromString);
 
+    getMovie = () => {
+        const { getMovie, movie } = this.props;
+        getMovie(movie);
+    };
+
     render() {
+        const { movie } = this.props;
         const {
-            imageUrl,
-            releaseDate,
+            poster_path,
+            release_date,
             genres,
-            title
-        } = this.props;
+            title,
+        } = movie;
 
         return (
             <div className={`${blockName}`}>
                 <img
                     className={`${blockName}__poster`}
-                    src={imageUrl}
+                    src={poster_path}
                     alt={title}
+                    onClick={this.getMovie}
                 />
                 <div className={`${blockName}__description`}>
                     <p className={`${blockName}__description__title`}>
                         <span className={`${blockName}__description__year`}>
-                            {this.getYear(releaseDate)}
+                            {this.getYear(release_date)}
                         </span>
                         {title}
                     </p>

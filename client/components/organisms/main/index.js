@@ -15,7 +15,7 @@ export default class Main extends PureComponent {
             offset: '',
             total: 0,
         },
-        isMovieDetails: true,
+        film: null,
     };
 
     componentDidMount() {
@@ -27,10 +27,21 @@ export default class Main extends PureComponent {
                     offset: mock.offset,
                     total: mock.total,
                 },
-                film: mockedResponse1,
             })
         }, 500);
     }
+
+    getMovie = film => {
+        this.setState({
+            film,
+        });
+    };
+
+    goBack = () => {
+        this.setState({
+            film: null
+        });
+    };
 
     render() {
         const {
@@ -43,12 +54,13 @@ export default class Main extends PureComponent {
             <Fragment>
                 <ErrorBoundary>
                     <Header
-                        isMovieDetails={isMovieDetails}
                         film={film}
+                        goBack={this.goBack}
                     />
                 </ErrorBoundary>
                 <ErrorBoundary>
                     <MainContent
+                        getMovie={this.getMovie}
                         movies={movies}
                     />
                 </ErrorBoundary>
