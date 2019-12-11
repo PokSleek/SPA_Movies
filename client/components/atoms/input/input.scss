@@ -8,6 +8,7 @@
   border: 0;
 
   &::placeholder {
+    user-select: none;
     color: #999999;
   }
   @media screen and (max-width: 700px) {

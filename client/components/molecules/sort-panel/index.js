@@ -9,14 +9,14 @@ const blockName = 'sort-panel';
 
 export default class SortPanel extends PureComponent {
     render() {
-        const { options, value, handleChange } = this.props;
+        const { sortOptions, value, description, handleChange } = this.props;
 
         return (
             <div className={blockName}>
                 <RadioInput
-                    options={options}
+                    options={sortOptions}
                     value={value}
-                    description={'SORT BY'}
+                    description={description}
                     handleChange={handleChange}
                 />
             </div>

@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 
-import SearchBlock from 'molecules/search-block';
+import Header from 'organisms/header';
 import MainContent from 'molecules/main-content';
 
 export default class Main extends PureComponent {
@@ -8,7 +8,9 @@ export default class Main extends PureComponent {
     render() {
         return (
             <Fragment>
-                <SearchBlock />
+                <Header
+                    isMovieDetails={true}
+                />
                 <MainContent />
             </Fragment>
         )

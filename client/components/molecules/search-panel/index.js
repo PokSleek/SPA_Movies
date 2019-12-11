@@ -12,29 +12,21 @@ const blockName = 'search-panel';
 export default class SearchPanel extends PureComponent {
 
     static defaultProps = {
-        options: [],
-        value: {},
-    };
-
-    state = {
-        value: {
-            search: this.props.value.search,
-            searchBy: this.props.value.searchBy,
-        }
-    };
-
-    handleChange = field => value => {
-        this.setState({
-            value: {
-                ...this.state.value,
-                [field]: value,
-            },
-        });
+        searchOptions: [],
+        sortOptions: [],
+        searchValue: '',
     };
 
     render() {
-        const { options } = this.props;
-        const { search, searchBy } = this.state.value;
+        const {
+            searchOptions,
+            searchValue,
+            searchBy,
+            handleChangeSearch,
+            handleChangeSearchBy,
+            onSubmit,
+            searchByDescription
+        } = this.props;
 
         return (
             <div className={blockName}>
@@ -42,19 +34,20 @@ export default class SearchPanel extends PureComponent {
                 <div className={`${blockName}__input-field`}>
                     <Input
                         placeholder={'Search'}
-                        value={search}
-                        handleChange={this.handleChange('search')}
+                        value={searchValue}
+                        handleChange={handleChangeSearch}
                     />
                     <Button
                         buttonText={'SEARCH'}
+                        onClick={onSubmit}
                     />
                 </div>
                 <div className={`${blockName}__sorting-field`}>
                     <RadioInput
-                        options={options}
+                        options={searchOptions}
                         value={searchBy}
-                        description={'SEARCH BY'}
-                        handleChange={this.handleChange('searchBy')}
+                        description={searchByDescription}
+                        handleChange={handleChangeSearchBy}
                     />
                 </div>
             </div>
