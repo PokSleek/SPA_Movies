@@ -22,6 +22,7 @@ module.exports = {
             'core': path.resolve(__dirname, './core'),
             'store': path.resolve(__dirname, './store'),
             'utils': path.resolve(__dirname, './utils'),
+            'mock': path.resolve(__dirname, './mock'),
             'images': path.resolve(__dirname, './public/layouts/assets/images'),
         },
         extensions: ['*', '.js', '.jsx'],
