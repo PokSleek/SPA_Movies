@@ -64,6 +64,10 @@ export default class Header extends PureComponent {
             isMovieDetails
         } = this.state;
 
+        if (searchValue === 'ERROR') {
+            throw new Error('error');
+        }
+
         return (
             <div className={blockName}>
                 <div className={`${blockName}__bg`}>
