@@ -36,10 +36,9 @@ const sortOptions = [
 
 export default class Header extends PureComponent {
 
-    static defaultProps = {
-        options: [],
-        value: {},
-    };
+    // static defaultProps = {
+    //     film: {},
+    // };
 
     state = {
         searchValue: '',
@@ -58,13 +57,16 @@ export default class Header extends PureComponent {
 
     render() {
         const {
+            film
+        } = this.props;
+        const {
             searchValue,
             searchBy,
             sortBy,
             isMovieDetails
         } = this.state;
 
-        if (searchValue === 'ERROR') {
+        if (searchValue === 'ERROR-BOUNDARY') {
             throw new Error('error');
         }
 
@@ -77,7 +79,9 @@ export default class Header extends PureComponent {
                         onClickBackBtn={this.onClickGoBack}
                     />
                     {isMovieDetails ?
-                        <MovieInfo /> :
+                        <MovieInfo
+                            film={film}
+                        /> :
                         <SearchPanel
                             handleChangeSearch={this.handleChange('searchValue')}
                             handleChangeSearchBy={this.handleChange('searchBy')}

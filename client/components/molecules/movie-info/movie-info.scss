@@ -1,0 +1,98 @@
+.movie-info {
+  display: flex;
+  padding: 5% 10%;
+  justify-content: space-between;
+
+
+  &__poster {
+    width: 30%;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &__content {
+    width: 60%;
+    padding: 4% 0;
+    display: flex;
+    flex-direction: column;
+
+    &__first-row {
+      margin-bottom: 5%;
+      display: flex;
+      align-items: center;
+
+      &__title {
+        font-size: 50px;
+        margin-right: 5%;
+      }
+
+      &__rating {
+        color: greenyellow;
+        width: 70px;
+        height: 70px;
+        border-radius: 35px;
+        border: solid 2px #ffffff;
+        font-size: 30px;
+        //font-weight: 300;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    &__second-row {
+      margin-bottom: 5%;
+      color: #f65261;
+      font-size: 42px;
+      display: flex;
+
+      &__year {
+        margin-right: 5%;
+      }
+    }
+
+    &__description {
+      font-size: 28px;
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    display: flex;
+    flex-direction: column;
+
+    &__poster {
+      width: 80%;
+      align-self: center;
+    }
+    &__content {
+      width: 100%;
+      margin: 10px 0;
+      padding: 0;
+
+      &__first-row {
+        margin-bottom: 5%;
+        flex-direction: column;
+
+        &__title {
+          font-size: 50px;
+          margin-right: 0;
+          margin-bottom: 10px;
+        }
+      }
+
+      &__second-row {
+        justify-content: space-around;
+
+        &__year {
+          margin-right: 0;
+        }
+      }
+
+      &__description {
+        font-size: 20px;
+      }
+    }
+  }
+}

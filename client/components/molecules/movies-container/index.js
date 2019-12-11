@@ -9,7 +9,6 @@ const blockName = 'movies-container';
 export default class MoviesContainer extends PureComponent {
 
     static defaultProps = {
-        film: {},
         movies: [],
     };
 

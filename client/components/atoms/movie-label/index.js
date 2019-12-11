@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import memoizeOne from 'memoize-one';
 
-import { genresParser, getYearFromString} from './utils'
+import { getYearFromString } from 'utils'
+import { genresParser} from './utils'
 
 import './movie-label.scss';
 
@@ -26,7 +27,6 @@ export default class MovieLabel extends PureComponent {
             <div className={`${blockName}`}>
                 <img
                     className={`${blockName}__poster`}
-                    align={'center'}
                     src={imageUrl}
                     alt={title}
                 />

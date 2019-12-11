@@ -13,6 +13,7 @@ export default class SortPanel extends PureComponent {
 
         return (
             <div className={blockName}>
+                <p></p>
                 <RadioInput
                     options={sortOptions}
                     value={value}
