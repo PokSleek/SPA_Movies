@@ -4,7 +4,8 @@ import Header from 'organisms/header';
 import MainContent from 'molecules/main-content';
 import ErrorBoundary from 'atoms/error-boundary'
 import mock from 'mock/getMovies';
-import { mockedResponse1 } from 'mock/getMovieById';
+
+import { smoothScrollTo } from 'utils';
 
 export default class Main extends PureComponent {
 
@@ -35,6 +36,7 @@ export default class Main extends PureComponent {
         this.setState({
             film,
         });
+        smoothScrollTo(document.body.querySelector('.header'));
     };
 
     goBack = () => {
@@ -47,7 +49,6 @@ export default class Main extends PureComponent {
         const {
             moviesData: { movies },
             film,
-            isMovieDetails
         } = this.state;
 
         return (

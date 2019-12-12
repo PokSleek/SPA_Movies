@@ -12,10 +12,6 @@ export default class MoviesContainer extends PureComponent {
         movies: [],
     };
 
-    getMovie = movie => () => {
-        this.props.getMovie(movie);
-    };
-
     render() {
         const { movies, getMovie } = this.props;
 
