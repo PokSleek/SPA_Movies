@@ -2,7 +2,8 @@ import React, { PureComponent, Fragment } from 'react';
 
 import Header from 'organisms/header';
 import MainContent from 'molecules/main-content';
-import ErrorBoundary from 'atoms/error-boundary'
+import ErrorBoundary from 'atoms/error-boundary';
+import { getMovies, getMoviesById } from 'core/api/requests';
 import mock from 'mock/getMovies';
 
 import { smoothScrollTo } from 'utils';
@@ -21,6 +22,8 @@ export default class Main extends PureComponent {
 
     componentDidMount() {
         setTimeout(() => {
+            getMovies().then(data => console.log(data));
+            getMoviesById({ id: 447365 }).then(data => console.log(data));
             this.setState({
                 moviesData: {
                     movies: mock.data,
