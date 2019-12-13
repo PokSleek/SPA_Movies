@@ -36,15 +36,10 @@ const sortOptions = [
 
 export default class Header extends PureComponent {
 
-    // static defaultProps = {
-    //     film: {},
-    // };
-
     state = {
-        searchValue: '',
+        search: '',
         searchBy: 'title',
         sortBy: 'releaseDate',
-        isMovieDetails: this.props.isMovieDetails,
     };
 
     handleChange = field => value => {
@@ -53,15 +48,26 @@ export default class Header extends PureComponent {
         });
     };
 
+    onSubmit = () => {
+        const { onSubmit } = this.props;
+        const { searchBy, search, sortBy } = this.state;
+
+        onSubmit({
+            searchBy,
+            search,
+            sortBy,
+        });
+    };
+
     render() {
-        const { film, goBack } = this.props;
+        const { film, onGoBack } = this.props;
         const {
-            searchValue,
+            search,
             searchBy,
             sortBy
         } = this.state;
 
-        if (searchValue === 'ERROR-BOUNDARY') {
+        if (search === 'ERROR-BOUNDARY') {
             throw new Error('error');
         }
 
@@ -70,20 +76,20 @@ export default class Header extends PureComponent {
                 <div className={`${blockName}__bg`}>
                     <Navigation
                         isBack={!!film}
-                        onClickBackBtn={goBack}
+                        onClickBackBtn={onGoBack}
                     />
                     {film ?
                         <MovieInfo
                             film={film}
                         /> :
                         <SearchPanel
-                            handleChangeSearch={this.handleChange('searchValue')}
+                            handleChangeSearch={this.handleChange('search')}
                             handleChangeSearchBy={this.handleChange('searchBy')}
                             searchOptions={searchOptions}
-                            searchValue={searchValue}
+                            searchValue={search}
                             searchByDescription={'SEARCH BY'}
                             searchBy={searchBy}
-                            onSubmit={noop}
+                            onSubmit={this.onSubmit}
                         />
                     }
                 </div>

@@ -4,7 +4,7 @@ import { getIdentityData } from 'core/api/utils';
 
 const { GET_MOVIES } = ENDPOINTS;
 
-export const getMoviesById = ({ id }) =>
+export const getMovieById = ({ id }) =>
     api
         .get(`${GET_MOVIES}/${id}`)
         .then(getIdentityData);

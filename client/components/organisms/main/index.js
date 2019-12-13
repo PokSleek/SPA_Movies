@@ -3,16 +3,15 @@ import React, { PureComponent, Fragment } from 'react';
 import Header from 'organisms/header';
 import MainContent from 'molecules/main-content';
 import ErrorBoundary from 'atoms/error-boundary';
-import { getMovies, getMoviesById } from 'core/api/requests';
-import mock from 'mock/getMovies';
+import { getMovies, getMovieById } from 'core/api/requests';
 
 import { smoothScrollTo } from 'utils';
 
 export default class Main extends PureComponent {
 
     state = {
-        moviesData: {
-            movies: [],
+        movies: {
+            data: [],
             limit: '',
             offset: '',
             total: 0,
@@ -21,25 +20,27 @@ export default class Main extends PureComponent {
     };
 
     componentDidMount() {
-        setTimeout(() => {
-            getMovies().then(data => console.log(data));
-            getMoviesById({ id: 447365 }).then(data => console.log(data));
-            this.setState({
-                moviesData: {
-                    movies: mock.data,
-                    limit: mock.limit,
-                    offset: mock.offset,
-                    total: mock.total,
-                },
-            })
-        }, 500);
+        this.getMovies();
     }
 
-    getMovie = film => {
-        this.setState({
-            film,
-        });
-        smoothScrollTo(document.body.querySelector('.header'));
+    getMovies = params => {
+        getMovies(params)
+            .then(({ data }) => {
+                console.log(data);
+                this.setState({
+                    movies: data,
+                })
+            });
+    };
+
+    getMovieById = id => {
+        getMovieById(id)
+            .then(({ data }) => {
+                this.setState({
+                    film: data,
+                });
+                smoothScrollTo(document.body.querySelector('.header'));
+            });
     };
 
     goBack = () => {
@@ -50,7 +51,7 @@ export default class Main extends PureComponent {
 
     render() {
         const {
-            moviesData: { movies },
+            movies: { data },
             film,
         } = this.state;
 
@@ -59,13 +60,14 @@ export default class Main extends PureComponent {
                 <ErrorBoundary>
                     <Header
                         film={film}
-                        goBack={this.goBack}
+                        onSubmit={this.getMovies}
+                        onGoBack={this.goBack}
                     />
                 </ErrorBoundary>
                 <ErrorBoundary>
                     <MainContent
-                        getMovie={this.getMovie}
-                        movies={movies}
+                        getMovie={this.getMovieById}
+                        movies={data}
                     />
                 </ErrorBoundary>
             </Fragment>

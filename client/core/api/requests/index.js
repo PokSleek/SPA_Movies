@@ -1,7 +1,7 @@
 import { getMovies } from './getMovies';
-import { getMoviesById } from './getMoviesById';
+import { getMovieById } from './getMovieById';
 
 export {
     getMovies,
-    getMoviesById,
+    getMovieById,
 };
