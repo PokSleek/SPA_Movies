@@ -1,19 +1,19 @@
 import React, { PureComponent, Fragment } from 'react';
+import { connect } from 'react-redux';
 
 import Header from 'organisms/header';
 import MainContent from 'molecules/main-content';
 import ErrorBoundary from 'atoms/error-boundary';
-import { getMovies, getMovieById } from 'core/api/requests';
+import { getMovies, getFilm } from 'store/thunks/movies';
+import { setFilm } from 'store/actions/movies';
 
 import { smoothScrollTo } from 'utils';
 
-export default class Main extends PureComponent {
+class Main extends PureComponent {
 
-    state = {
+    static defaultProps = {
         movies: {
             data: [],
-            limit: '',
-            offset: '',
             total: 0,
         },
         film: null,
@@ -24,36 +24,25 @@ export default class Main extends PureComponent {
     }
 
     getMovies = params => {
+        const { getMovies } = this.props;
         getMovies(params)
-            .then(({ data }) => {
-                console.log(data);
-                this.setState({
-                    movies: data,
-                })
-            });
     };
 
     getMovieById = id => {
-        getMovieById(id)
-            .then(({ data }) => {
-                this.setState({
-                    film: data,
-                });
+        const { getFilm } = this.props;
+        getFilm(id)
+            .then(() => {
                 smoothScrollTo(document.body.querySelector('.header'));
             });
     };
 
     goBack = () => {
-        this.setState({
-            film: null
-        });
+        const { setFilm } = this.props;
+        setFilm(null);
     };
 
     render() {
-        const {
-            movies: { data },
-            film,
-        } = this.state;
+        const { movies: { data, total }, film } = this.props;
 
         return (
             <Fragment>
@@ -75,3 +64,12 @@ export default class Main extends PureComponent {
     }
 }
 
+export default connect(
+    ({ movies }) => {
+        return {
+            movies: movies.movies,
+            film: movies.film,
+        }
+    },
+    { getMovies, getFilm, setFilm }
+)(Main);

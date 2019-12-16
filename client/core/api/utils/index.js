@@ -3,4 +3,4 @@
  * @param data
  * @returns {{data: *}}
  */
-export const getIdentityData = ({ data }) => ({ data });
+export const getSpreadData = ({ data }) => ({ ...data });
