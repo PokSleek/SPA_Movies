@@ -1,68 +1,62 @@
 import React, { PureComponent, Fragment } from 'react';
+import { connect } from 'react-redux';
 
 import Header from 'organisms/header';
 import MainContent from 'molecules/main-content';
-import ErrorBoundary from 'atoms/error-boundary'
-import mock from 'mock/getMovies';
+import ErrorBoundary from 'atoms/error-boundary';
+import { getMovies, getFilm } from 'store/thunks/movies';
+import { setFilm } from 'store/actions/movies';
 
 import { smoothScrollTo } from 'utils';
 
-export default class Main extends PureComponent {
+class Main extends PureComponent {
 
-    state = {
-        moviesData: {
-            movies: [],
-            limit: '',
-            offset: '',
+    static defaultProps = {
+        movies: {
+            data: [],
             total: 0,
         },
         film: null,
     };
 
     componentDidMount() {
-        setTimeout(() => {
-            this.setState({
-                moviesData: {
-                    movies: mock.data,
-                    limit: mock.limit,
-                    offset: mock.offset,
-                    total: mock.total,
-                },
-            })
-        }, 500);
+        this.getMovies();
     }
 
-    getMovie = film => {
-        this.setState({
-            film,
-        });
-        smoothScrollTo(document.body.querySelector('.header'));
+    getMovies = params => {
+        const { getMovies } = this.props;
+        getMovies(params)
+    };
+
+    getMovieById = id => {
+        const { getFilm } = this.props;
+        getFilm(id)
+            .then(() => {
+                smoothScrollTo(document.body.querySelector('.header'));
+            });
     };
 
     goBack = () => {
-        this.setState({
-            film: null
-        });
+        const { setFilm } = this.props;
+        setFilm(null);
     };
 
     render() {
-        const {
-            moviesData: { movies },
-            film,
-        } = this.state;
+        const { movies: { data, total }, film } = this.props;
 
         return (
             <Fragment>
                 <ErrorBoundary>
                     <Header
                         film={film}
-                        goBack={this.goBack}
+                        onSubmit={this.getMovies}
+                        onGoBack={this.goBack}
                     />
                 </ErrorBoundary>
                 <ErrorBoundary>
                     <MainContent
-                        getMovie={this.getMovie}
-                        movies={movies}
+                        getMovie={this.getMovieById}
+                        movies={data}
                     />
                 </ErrorBoundary>
             </Fragment>
@@ -70,3 +64,12 @@ export default class Main extends PureComponent {
     }
 }
 
+export default connect(
+    ({ movies }) => {
+        return {
+            movies: movies.movies,
+            film: movies.film,
+        }
+    },
+    { getMovies, getFilm, setFilm }
+)(Main);

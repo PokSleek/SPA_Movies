@@ -45,12 +45,16 @@ export default class MovieInfo extends PureComponent {
                             <p className={`${blockName}__content__second-row__year`}>{this.getYear(release_date)}</p>
                             {
                                 runtime ?
-                                    <p className={`${blockName}__content__second-row__runtime`}>`${runtime} min`</p> :
+                                    <p className={`${blockName}__content__second-row__runtime`}>{runtime} min</p> :
                                     null
                             }
                         </div>
                         <p className={`${blockName}__content__description`}>
-                            {overview}
+                            {
+                                overview ?
+                                    overview :
+                                    null
+                            }
                         </p>
                     </div>
                 </div>

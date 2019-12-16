@@ -10,9 +10,12 @@ export default class Button extends PureComponent {
     };
 
     render() {
-        const { buttonText } = this.props;
+        const { buttonText, onClick } = this.props;
 
-        return <button className={blockName}>
+        return <button
+            className={blockName}
+            onClick={onClick}
+        >
             {buttonText.toUpperCase()}
         </button>
     }
