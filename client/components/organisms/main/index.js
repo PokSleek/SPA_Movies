@@ -1,5 +1,9 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
+import qs from 'query-string';
+import get from 'lodash/get';
+import filter from 'lodash/filter';
+
 
 import Header from 'organisms/header';
 import MainContent from 'molecules/main-content';
@@ -20,8 +24,17 @@ class Main extends PureComponent {
     };
 
     componentDidMount() {
-        this.getMovies();
+        const { location: { pathname }, match: { params }, getFilm } = this.props;
+        if (pathname.includes('film')) {
+            getFilm(params)
+        }
+        this.getMovies(this.props.searchParams);
     }
+
+    changeHistory = (path, pathParams, query) => {
+        const { history } = this.props;
+        history.push(`${path}/${pathParams}${qs.stringify(query)}`);
+    };
 
     getMovies = params => {
         const { getMovies } = this.props;
@@ -30,6 +43,7 @@ class Main extends PureComponent {
 
     getMovieById = id => {
         const { getFilm } = this.props;
+        this.changeHistory('/film', id.id);
         getFilm(id)
             .then(() => {
                 smoothScrollTo(document.body.querySelector('.header'));
@@ -41,16 +55,37 @@ class Main extends PureComponent {
         setFilm(null);
     };
 
+    headerOnSubmit = params => {
+        /// need action to update searchParams
+        this.getMovies(params);
+        this.changeHistory()
+    };
+
     render() {
-        const { movies: { data, total }, film } = this.props;
+        const {
+            movies: {
+                data,
+                total,
+            },
+            film,
+            searchParams,
+            match: {
+                params: {
+                    id
+                }
+            },
+        } = this.props;
 
         return (
             <Fragment>
                 <ErrorBoundary>
                     <Header
+                        searchParams={searchParams}
                         film={film}
                         onSubmit={this.getMovies}
                         onGoBack={this.goBack}
+                        filmId={id}
+                        changeHistory={this.changeHistory}
                     />
                 </ErrorBoundary>
                 <ErrorBoundary>
@@ -65,10 +100,16 @@ class Main extends PureComponent {
 }
 
 export default connect(
-    ({ movies }) => {
+    ({ movies }, { location }) => {
+        const parsedQuery = qs.parse(location.search);
         return {
             movies: movies.movies,
             film: movies.film,
+            searchParams: {
+                search: get(parsedQuery, 'search', ''),
+                searchBy: get(parsedQuery, 'searchBy', 'title'),
+                sortBy: get(parsedQuery, 'sortBy', 'releaseDate'),
+            },
         }
     },
     { getMovies, getFilm, setFilm }

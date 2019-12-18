@@ -4,7 +4,7 @@ import { getSpreadData } from 'core/api/utils';
 
 const { GET_MOVIES } = ENDPOINTS;
 
-export const getMovies = params =>
+export const getMovies = ({ search, searchBy, sortBy } = {}) =>
     api
-        .get(`${GET_MOVIES}`, params)
+        .get(`${GET_MOVIES}`, { search, searchBy, sortBy })
         .then(getSpreadData);

@@ -78,6 +78,8 @@ module.exports = {
         contentBase: path.join(__dirname, 'public'),
         port: 9000,
         open: true,
+        openPage: 'search',
+        historyApiFallback: true,
     },
     plugins: [
         new CleanWebpackPlugin(),
