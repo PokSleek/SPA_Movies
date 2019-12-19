@@ -4,6 +4,7 @@ import qs from 'query-string';
 import memoizeOne from 'memoize-one';
 import get from 'lodash/get';
 import pickBy from 'lodash/pickBy';
+import sample from 'lodash/sample';
 
 
 import Header from 'organisms/header';
@@ -33,18 +34,23 @@ class Main extends PureComponent {
         const { location: { pathname }, match: { params }, getFilm } = this.props;
         if (pathname.includes('film')) {
             getFilm(params)
+                .then(({ payload }) => {
+                    this.genre = sample(payload.genres);
+                    this.getMovies({ filter: this.genre });
+                })
+        } else {
+            this.getMovies(this.props.searchParams);
         }
-        this.getMovies(this.props.searchParams);
     }
 
     queryParser = memoizeOne(({ search, searchBy, sortBy } = {}) =>
-    qs.stringify(
-        pickBy({
-            search,
-            searchBy,
-            sortBy,
-        }, (value, key) => value !== defaultFilters[key]))
-);
+        qs.stringify(
+            pickBy({
+                search,
+                searchBy,
+                sortBy,
+          }, (value, key) => value !== defaultFilters[key]))
+    );
 
     changeHistory = (path, query) => {
         const { history } = this.props;
@@ -57,21 +63,25 @@ class Main extends PureComponent {
     };
 
     onClickMovie = movie => {
-        const { getFilm } = this.props;
+        const { getFilm, film } = this.props;
         this.changeHistory(`/film/${movie.id}`);
         getFilm(movie)
-            .then(() => {
+            .then(data => {
                 smoothScrollTo(document.body.querySelector('.header'));
+                return data
             })
-            .then(() =>
-                this.getMovies({
-                    filter: this.genre,
-                })
+            .then(({ payload }) => {
+                    this.genre = sample(payload.genres);
+                    this.getMovies({
+                        filter: this.genre,
+                    });
+                }
             );
     };
 
     goBack = () => {
         const { setFilm } = this.props;
+        this.genre = null;
         setFilm(null);
     };
 
@@ -99,7 +109,7 @@ class Main extends PureComponent {
                         onSubmit={this.getMovies}
                         onGoBack={this.goBack}
                         filmId={id}
-                        filmGenre={get(film, 'genres[0]', null)}
+                        filmGenre={this.genre}
                         changeHistory={this.changeHistory}
                         queryParser={this.queryParser}
                         total={total}

@@ -21,6 +21,15 @@ export default function movies(state = initialState, { type, payload }) {
                 ...state,
                 film: payload,
             };
+        // case 'SET_SEARCH_PARAMS':
+        //     return {
+        //         ...state,
+        //         searchParams: {
+        //             search: payload.search,
+        //             searchBy: payload.searchBy,
+        //             sortBy: payload
+        //         },
+        //     };
         default: return state;
     }
 };
