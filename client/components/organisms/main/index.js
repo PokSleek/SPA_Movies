@@ -16,7 +16,7 @@ import { smoothScrollTo } from 'utils';
 const defaultFilters = {
     search: '',
     searchBy: 'title',
-    sortBy: 'releaseDate',
+    sortBy: 'release_date',
 }
 
 class Main extends PureComponent {
@@ -56,13 +56,18 @@ class Main extends PureComponent {
         getMovies(params)
     };
 
-    getMovieById = id => {
+    onClickMovie = movie => {
         const { getFilm } = this.props;
-        this.changeHistory(`/film/${id.id}`);
-        getFilm(id)
+        this.changeHistory(`/film/${movie.id}`);
+        getFilm(movie)
             .then(() => {
                 smoothScrollTo(document.body.querySelector('.header'));
-            });
+            })
+            .then(() => 
+                this.getMovies({
+                    filter: movie.genres[0]
+                })
+            );
     };
 
     goBack = () => {
@@ -100,7 +105,7 @@ class Main extends PureComponent {
                 </ErrorBoundary>
                 <ErrorBoundary>
                     <MainContent
-                        getMovie={this.getMovieById}
+                        getMovie={this.onClickMovie}
                         movies={data}
                     />
                 </ErrorBoundary>
@@ -118,7 +123,7 @@ export default connect(
             searchParams: {
                 search: get(parsedQuery, 'search', ''),
                 searchBy: get(parsedQuery, 'searchBy', 'title'),
-                sortBy: get(parsedQuery, 'sortBy', 'releaseDate'),
+                sortBy: get(parsedQuery, 'sortBy', 'release_date'),
             },
         }
     },
