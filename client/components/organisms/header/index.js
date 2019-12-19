@@ -73,6 +73,8 @@ export default class Header extends PureComponent {
             onGoBack,
             searchParams,
             queryParser,
+            filmGenre,
+            total,
         } = this.props;
 
         const {
@@ -116,6 +118,8 @@ export default class Header extends PureComponent {
                     </Switch>
                 </div>
                 <SortPanel
+                    total={total}
+                    filmGenre={filmGenre}
                     sortOptions={sortOptions}
                     value={sortBy}
                     description={'SORT BY'}

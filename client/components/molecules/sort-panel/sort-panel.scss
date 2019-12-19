@@ -6,6 +6,10 @@
   display: flex;
   align-items: center;
 
+  &__details {
+    font-weight: 700;
+  }
+
   .radio-input__container {
     margin-left: auto;
   }

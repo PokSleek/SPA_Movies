@@ -17,7 +17,7 @@ const defaultFilters = {
     search: '',
     searchBy: 'title',
     sortBy: 'release_date',
-}
+};
 
 class Main extends PureComponent {
 
@@ -63,9 +63,9 @@ class Main extends PureComponent {
             .then(() => {
                 smoothScrollTo(document.body.querySelector('.header'));
             })
-            .then(() => 
+            .then(() =>
                 this.getMovies({
-                    filter: movie.genres[0]
+                    filter: this.genre,
                 })
             );
     };
@@ -99,8 +99,10 @@ class Main extends PureComponent {
                         onSubmit={this.getMovies}
                         onGoBack={this.goBack}
                         filmId={id}
+                        filmGenre={get(film, 'genres[0]', null)}
                         changeHistory={this.changeHistory}
                         queryParser={this.queryParser}
+                        total={total}
                     />
                 </ErrorBoundary>
                 <ErrorBoundary>
