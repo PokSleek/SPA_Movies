@@ -1,12 +1,13 @@
 import React, { PureComponent } from 'react';
-import noop from 'lodash/noop';
+import { Route, Switch } from 'react-router-dom'
 
 import SearchPanel from 'molecules/search-panel';
 import MovieInfo from 'molecules/movie-info';
 import Navigation from 'molecules/navigation';
-import SortPanel from "molecules/sort-panel";
+import SortPanel from 'molecules/sort-panel';
 
 import './header.scss';
+
 
 
 const blockName = 'header';
@@ -17,8 +18,8 @@ const searchOptions = [
         value: 'title',
     },
     {
-        text: 'GENGRE',
-        value: 'gengre',
+        text: 'GENRE',
+        value: 'genres',
     },
 ];
 
@@ -36,16 +37,16 @@ const sortOptions = [
 
 export default class Header extends PureComponent {
 
-    // static defaultProps = {
-    //     film: {},
-    // };
+    static defaultProps = {
+        searchParams: {},
+    };
 
     state = {
-        searchValue: '',
-        searchBy: 'title',
-        sortBy: 'releaseDate',
-        isMovieDetails: this.props.isMovieDetails,
+        search: this.props.searchParams.search,
+        searchBy: this.props.searchParams.searchBy,
+        sortBy: this.props.searchParams.sortBy,
     };
+
 
     handleChange = field => value => {
         this.setState({
@@ -53,15 +54,34 @@ export default class Header extends PureComponent {
         });
     };
 
-    render() {
-        const { film, goBack } = this.props;
-        const {
-            searchValue,
+    onSubmit = () => {
+        const { onSubmit, changeHistory } = this.props;
+        const { searchBy, search, sortBy } = this.state;
+
+        changeHistory('/search', {searchBy, search, sortBy});
+
+        onSubmit({
             searchBy,
-            sortBy
+            search,
+            sortBy,
+        });
+    };
+
+    render() {
+        const {
+            film,
+            onGoBack,
+            searchParams,
+            queryParser,
+        } = this.props;
+
+        const {
+            search,
+            searchBy,
+            sortBy,
         } = this.state;
 
-        if (searchValue === 'ERROR-BOUNDARY') {
+        if (search === 'ERROR-BOUNDARY') {
             throw new Error('error');
         }
 
@@ -70,22 +90,30 @@ export default class Header extends PureComponent {
                 <div className={`${blockName}__bg`}>
                     <Navigation
                         isBack={!!film}
-                        onClickBackBtn={goBack}
+                        onClickBackBtn={onGoBack}
+                        redirectTo={{
+                            pathname: '/search',
+                            search: queryParser(searchParams),
+                        }}
                     />
-                    {film ?
-                        <MovieInfo
-                            film={film}
-                        /> :
-                        <SearchPanel
-                            handleChangeSearch={this.handleChange('searchValue')}
-                            handleChangeSearchBy={this.handleChange('searchBy')}
-                            searchOptions={searchOptions}
-                            searchValue={searchValue}
-                            searchByDescription={'SEARCH BY'}
-                            searchBy={searchBy}
-                            onSubmit={noop}
-                        />
-                    }
+                    <Switch>
+                        <Route path='/film/:id'>
+                            <MovieInfo
+                                film={film}
+                            />
+                        </Route>
+                        <Route path="/search">
+                            <SearchPanel
+                                handleChangeSearch={this.handleChange('search')}
+                                handleChangeSearchBy={this.handleChange('searchBy')}
+                                searchOptions={searchOptions}
+                                searchValue={search}
+                                searchByDescription={'SEARCH BY'}
+                                searchBy={searchBy}
+                                onSubmit={this.onSubmit}
+                            />
+                        </Route>
+                    </Switch>
                 </div>
                 <SortPanel
                     sortOptions={sortOptions}

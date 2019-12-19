@@ -1,68 +1,107 @@
 import React, { PureComponent, Fragment } from 'react';
+import { connect } from 'react-redux';
+import qs from 'query-string';
+import memoizeOne from 'memoize-one';
+import get from 'lodash/get';
+import pickBy from 'lodash/pickBy';
+
 
 import Header from 'organisms/header';
 import MainContent from 'molecules/main-content';
-import ErrorBoundary from 'atoms/error-boundary'
-import mock from 'mock/getMovies';
-
+import ErrorBoundary from 'atoms/error-boundary';
+import { getMovies, getFilm } from 'store/thunks/movies';
+import { setFilm } from 'store/actions/movies';
 import { smoothScrollTo } from 'utils';
 
-export default class Main extends PureComponent {
+const defaultFilters = {
+    search: '',
+    searchBy: 'title',
+    sortBy: 'releaseDate',
+}
 
-    state = {
-        moviesData: {
-            movies: [],
-            limit: '',
-            offset: '',
+class Main extends PureComponent {
+
+    static defaultProps = {
+        movies: {
+            data: [],
             total: 0,
         },
         film: null,
     };
 
     componentDidMount() {
-        setTimeout(() => {
-            this.setState({
-                moviesData: {
-                    movies: mock.data,
-                    limit: mock.limit,
-                    offset: mock.offset,
-                    total: mock.total,
-                },
-            })
-        }, 500);
+        const { location: { pathname }, match: { params }, getFilm } = this.props;
+        if (pathname.includes('film')) {
+            getFilm(params)
+        }
+        this.getMovies(this.props.searchParams);
     }
 
-    getMovie = film => {
-        this.setState({
-            film,
-        });
-        smoothScrollTo(document.body.querySelector('.header'));
+    queryParser = memoizeOne(({ search, searchBy, sortBy } = {}) =>
+    qs.stringify(
+        pickBy({
+            search,
+            searchBy,
+            sortBy,
+        }, (value, key) => value !== defaultFilters[key]))
+);
+
+    changeHistory = (path, query) => {
+        const { history } = this.props;
+        history.push(`${path}?${this.queryParser(query)}`);
+    };
+
+    getMovies = params => {
+        const { getMovies } = this.props;
+        getMovies(params)
+    };
+
+    getMovieById = id => {
+        const { getFilm } = this.props;
+        this.changeHistory(`/film/${id.id}`);
+        getFilm(id)
+            .then(() => {
+                smoothScrollTo(document.body.querySelector('.header'));
+            });
     };
 
     goBack = () => {
-        this.setState({
-            film: null
-        });
+        const { setFilm } = this.props;
+        setFilm(null);
     };
 
     render() {
         const {
-            moviesData: { movies },
+            movies: {
+                data,
+                total,
+            },
             film,
-        } = this.state;
+            searchParams,
+            match: {
+                params: {
+                    id
+                }
+            },
+        } = this.props;
 
         return (
             <Fragment>
                 <ErrorBoundary>
                     <Header
+                        searchParams={searchParams}
                         film={film}
-                        goBack={this.goBack}
+                        onSubmit={this.getMovies}
+                        onGoBack={this.goBack}
+                        filmId={id}
+                        changeHistory={this.changeHistory}
+                        queryParser={this.queryParser}
                     />
                 </ErrorBoundary>
                 <ErrorBoundary>
                     <MainContent
-                        getMovie={this.getMovie}
-                        movies={movies}
+                        getMovie={this.getMovieById}
+                        movies={data}
                     />
                 </ErrorBoundary>
             </Fragment>
@@ -70,3 +109,18 @@ export default class Main extends PureComponent {
     }
 }
 
+export default connect(
+    ({ movies }, { location }) => {
+        const parsedQuery = qs.parse(location.search);
+        return {
+            movies: movies.movies,
+            film: movies.film,
+            searchParams: {
+                search: get(parsedQuery, 'search', ''),
+                searchBy: get(parsedQuery, 'searchBy', 'title'),
+                sortBy: get(parsedQuery, 'sortBy', 'releaseDate'),
+            },
+        }
+    },
+    { getMovies, getFilm, setFilm }
+)(Main);
