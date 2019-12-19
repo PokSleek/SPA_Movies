@@ -7,7 +7,7 @@ export const getMovies = params => dispatch =>
         .then(data => dispatch(setMovies(data)))
         .catch(error => console.log(error));
 
-export const getFilm = id => dispatch =>
-    getMovieById(id)
+export const getFilm = params => dispatch =>
+    getMovieById(params)
         .then(data => dispatch(setFilm(data)))
         .catch(error => console.log(error));
