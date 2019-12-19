@@ -1,7 +1,5 @@
 import React, { PureComponent } from 'react';
 import { Route, Switch } from 'react-router-dom'
-import qs from 'query-string';
-import pickBy from 'lodash/pickBy';
 
 import SearchPanel from 'molecules/search-panel';
 import MovieInfo from 'molecules/movie-info';
@@ -9,7 +7,7 @@ import Navigation from 'molecules/navigation';
 import SortPanel from 'molecules/sort-panel';
 
 import './header.scss';
-import memoizeOne from "memoize-one";
+
 
 
 const blockName = 'header';
@@ -49,14 +47,6 @@ export default class Header extends PureComponent {
         sortBy: this.props.searchParams.sortBy,
     };
 
-    queryParser = memoizeOne(({ search, searchBy, sortBy }) =>
-        qs.stringify(
-            pickBy({
-                search,
-                searchBy,
-                sortBy,
-            }, value => value))
-    );
 
     handleChange = field => value => {
         this.setState({
@@ -67,6 +57,8 @@ export default class Header extends PureComponent {
     onSubmit = () => {
         const { onSubmit, changeHistory } = this.props;
         const { searchBy, search, sortBy } = this.state;
+
+        changeHistory('/search', {searchBy, search, sortBy});
 
         onSubmit({
             searchBy,
@@ -80,6 +72,7 @@ export default class Header extends PureComponent {
             film,
             onGoBack,
             searchParams,
+            queryParser,
         } = this.props;
 
         const {
@@ -100,7 +93,7 @@ export default class Header extends PureComponent {
                         onClickBackBtn={onGoBack}
                         redirectTo={{
                             pathname: '/search',
-                            search: this.queryParser(searchParams),
+                            search: queryParser(searchParams),
                         }}
                     />
                     <Switch>

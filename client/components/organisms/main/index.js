@@ -1,8 +1,9 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
 import qs from 'query-string';
+import memoizeOne from 'memoize-one';
 import get from 'lodash/get';
-import filter from 'lodash/filter';
+import pickBy from 'lodash/pickBy';
 
 
 import Header from 'organisms/header';
@@ -10,8 +11,13 @@ import MainContent from 'molecules/main-content';
 import ErrorBoundary from 'atoms/error-boundary';
 import { getMovies, getFilm } from 'store/thunks/movies';
 import { setFilm } from 'store/actions/movies';
-
 import { smoothScrollTo } from 'utils';
+
+const defaultFilters = {
+    search: '',
+    searchBy: 'title',
+    sortBy: 'releaseDate',
+}
 
 class Main extends PureComponent {
 
@@ -31,9 +37,18 @@ class Main extends PureComponent {
         this.getMovies(this.props.searchParams);
     }
 
-    changeHistory = (path, pathParams, query) => {
+    queryParser = memoizeOne(({ search, searchBy, sortBy } = {}) =>
+    qs.stringify(
+        pickBy({
+            search,
+            searchBy,
+            sortBy,
+        }, (value, key) => value !== defaultFilters[key]))
+);
+
+    changeHistory = (path, query) => {
         const { history } = this.props;
-        history.push(`${path}/${pathParams}${qs.stringify(query)}`);
+        history.push(`${path}?${this.queryParser(query)}`);
     };
 
     getMovies = params => {
@@ -43,7 +58,7 @@ class Main extends PureComponent {
 
     getMovieById = id => {
         const { getFilm } = this.props;
-        this.changeHistory('/film', id.id);
+        this.changeHistory(`/film/${id.id}`);
         getFilm(id)
             .then(() => {
                 smoothScrollTo(document.body.querySelector('.header'));
@@ -53,12 +68,6 @@ class Main extends PureComponent {
     goBack = () => {
         const { setFilm } = this.props;
         setFilm(null);
-    };
-
-    headerOnSubmit = params => {
-        /// need action to update searchParams
-        this.getMovies(params);
-        this.changeHistory()
     };
 
     render() {
@@ -86,6 +95,7 @@ class Main extends PureComponent {
                         onGoBack={this.goBack}
                         filmId={id}
                         changeHistory={this.changeHistory}
+                        queryParser={this.queryParser}
                     />
                 </ErrorBoundary>
                 <ErrorBoundary>
