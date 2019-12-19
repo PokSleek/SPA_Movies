@@ -16,7 +16,7 @@ import { smoothScrollTo } from 'utils';
 const defaultFilters = {
     search: '',
     searchBy: 'title',
-    sortBy: 'releaseDate',
+    sortBy: 'release_date',
 }
 
 class Main extends PureComponent {
@@ -123,7 +123,7 @@ export default connect(
             searchParams: {
                 search: get(parsedQuery, 'search', ''),
                 searchBy: get(parsedQuery, 'searchBy', 'title'),
-                sortBy: get(parsedQuery, 'sortBy', 'releaseDate'),
+                sortBy: get(parsedQuery, 'sortBy', 'release_date'),
             },
         }
     },

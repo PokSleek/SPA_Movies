@@ -16,7 +16,6 @@ export default class MovieLabel extends PureComponent {
 
     getMovie = () => {
         const { getMovie, movie } = this.props;
-        console.log(movie, getMovie);
         getMovie(movie);
     };
 

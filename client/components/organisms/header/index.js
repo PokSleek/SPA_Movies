@@ -26,11 +26,11 @@ const searchOptions = [
 const sortOptions = [
     {
         text: 'RELEASE DATE',
-        value: 'releaseDate',
+        value: 'release_date',
     },
     {
         text: 'RATING',
-        value: 'rating',
+        value: 'vote_average',
     },
 ];
 
