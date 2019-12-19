@@ -3,13 +3,14 @@ import React, { PureComponent } from 'react';
 import Logo from 'atoms/logo'
 
 import './navigation.scss';
+import { Link } from "react-router-dom";
 
 const blockName = 'navigation';
 
 
 export default class Navigation extends PureComponent {
     render() {
-        const { isBack, onClickLogo, onClickBackBtn } = this.props;
+        const { isBack, onClickLogo, onClickBackBtn, redirectTo } = this.props;
 
         return (
             <div className={blockName}>
@@ -19,7 +20,9 @@ export default class Navigation extends PureComponent {
                         className={`${blockName}__back-btn`}
                         onClick={onClickBackBtn}
                     >
-                        Back to search page
+                        <Link to={redirectTo}>
+                            Back to search page
+                        </Link>
                     </p> :
                     null}
             </div>
