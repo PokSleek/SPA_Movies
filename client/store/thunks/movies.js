@@ -1,5 +1,5 @@
-import { getMovies as fetchMovies, getMovieById } from 'core/api/requests';
-import { setMovies, setFilm } from 'store/actions/movies';
+import { getMovies as fetchMovies, getMovieById } from '../../core/api/requests';
+import { setMovies, setFilm } from '../actions/movies';
 
 
 export const getMovies = params => dispatch =>

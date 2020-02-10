@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
+import { Link } from "react-router-dom";
 
-import Logo from 'atoms/logo'
+import Logo from '../../atoms/logo'
 
 import './navigation.scss';
-import { Link } from "react-router-dom";
 
 const blockName = 'navigation';
 

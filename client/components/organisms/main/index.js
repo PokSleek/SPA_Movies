@@ -7,12 +7,12 @@ import pickBy from 'lodash/pickBy';
 import sample from 'lodash/sample';
 
 
-import Header from 'organisms/header';
-import MainContent from 'molecules/main-content';
-import ErrorBoundary from 'atoms/error-boundary';
-import { getMovies, getFilm } from 'store/thunks/movies';
-import { setFilm } from 'store/actions/movies';
-import { smoothScrollTo } from 'utils';
+import Header from '../header';
+import MainContent from '../../molecules/main-content';
+import ErrorBoundary from '../../atoms/error-boundary';
+import { getMovies, getFilm } from '../../../store/thunks/movies';
+import { setFilm } from '../../../store/actions/movies';
+import { smoothScrollTo } from '../../../utils';
 
 const defaultFilters = {
     search: '',
@@ -20,7 +20,7 @@ const defaultFilters = {
     sortBy: 'release_date',
 };
 
-class Main extends PureComponent {
+export class Main extends PureComponent {
 
     static defaultProps = {
         movies: {

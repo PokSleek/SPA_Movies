@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import RadioInput from 'atoms/radio-input';
+import RadioInput from '../../atoms/radio-input';
 
 import './sort-panel.scss';
 

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import MovieLabel from 'atoms/movie-label';
+import MovieLabel from '../../atoms/movie-label';
 
 import './movies-container.scss';
 

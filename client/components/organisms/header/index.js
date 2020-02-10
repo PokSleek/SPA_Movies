@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import { Route, Switch } from 'react-router-dom'
 
-import SearchPanel from 'molecules/search-panel';
-import MovieInfo from 'molecules/movie-info';
-import Navigation from 'molecules/navigation';
-import SortPanel from 'molecules/sort-panel';
+import SearchPanel from '../../molecules/search-panel';
+import MovieInfo from '../../molecules/movie-info';
+import Navigation from '../../molecules/navigation';
+import SortPanel from '../../molecules/sort-panel';
 
 import './header.scss';
 

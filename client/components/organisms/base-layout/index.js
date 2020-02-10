@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import Main from 'organisms/main';
-import { store } from 'store/store';
+import Main from '../main';
+import { store } from '../../../store/store';
 
 import './base-layout.scss';
 

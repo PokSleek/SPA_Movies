@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 
-import RadioInput from 'atoms/radio-input';
-import Button from 'atoms/button';
-import Input from 'atoms/input';
+import RadioInput from '../../atoms/radio-input';
+import Button from '../../atoms/button';
+import Input from '../../atoms/input';
 
 import './search-panel.scss';
 

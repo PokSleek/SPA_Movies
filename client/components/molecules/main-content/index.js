@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 
-import MoviesContainer from 'molecules/movies-container';
-import ContentFooter from 'atoms/content-footer';
+import MoviesContainer from '../movies-container';
+import ContentFooter from '../../atoms/content-footer';
 
 import './main-content.scss';
 

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import memoizeOne from 'memoize-one';
 
-import { getYearFromString } from 'utils'
+import { getYearFromString } from '../../../utils'
 import { genresParser} from './utils'
 
 import './movie-label.scss';

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import Logo from 'atoms/logo';
+import Logo from '../logo';
 
 import './content-footer.scss';
 

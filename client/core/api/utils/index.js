@@ -3,4 +3,4 @@
  * @param data
  * @returns {{data: *}}
  */
-export const getSpreadData = ({ data }) => ({ ...data });
+export const getSpreadData = ({ data } = { data: {} }) => ({ ...data });

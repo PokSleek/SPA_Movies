@@ -1,6 +1,6 @@
-import { api } from 'core/api/create-api';
-import { ENDPOINTS } from 'core/api/config';
-import { getSpreadData } from 'core/api/utils';
+import { api } from '../create-api';
+import { ENDPOINTS } from '../config';
+import { getSpreadData } from '../utils';
 
 const { GET_MOVIES } = ENDPOINTS;
 
